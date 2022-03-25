@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Burger from '../../components/Burger/Burger'
+import OrderSummery from '../../components/Burger/OrderSummery/OrderSummery'
+import Modal from '../../components/UI/Modal/Modal'
 
 const INGREDIENTS_PRICE = {
   salad: 0.5,
@@ -18,7 +20,8 @@ export class BurgerBuilder extends Component {
       meat: 0
     },
     totalPrice: 4,
-    purchasable: false
+    purchasable: false,
+    purchasing: false
   }
 
   updatePurchaseState(ingredients) {
@@ -27,7 +30,7 @@ export class BurgerBuilder extends Component {
         return ingredients[igKey];
       })
       .reduce((sum, el) => { return (sum + el) }, 0)
-    this.setState({purchasable:sum>0})  
+    this.setState({ purchasable: sum > 0 })
   }
 
   addIngredientHandler = (type) => {
@@ -60,6 +63,19 @@ export class BurgerBuilder extends Component {
     this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
     this.updatePurchaseState(updatedIngredients);
   }
+
+  purchaseHandler = () => {
+    this.setState({ purchasing: true });
+  }
+
+  purchaseCancelHandler = () => {
+    this.setState({ purchasing: false })
+  }
+
+  purchaseContinueHandler = () => {
+    alert('You continue!');
+  }
+
   render() {
     const disableInfo = {
       ...this.state.ingredients
@@ -69,12 +85,21 @@ export class BurgerBuilder extends Component {
     }
     return (
       <>
+        <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+          <OrderSummery
+            ingredients={this.state.ingredients}
+            price={this.state.totalPrice}
+            purchasedCanceled={this.purchaseCancelHandler}
+            purchasedContinued={this.purchaseContinueHandler}
+          />
+        </Modal>
         <Burger ingredients={this.state.ingredients} />
         <BuildControls
           ingredientAdded={this.addIngredientHandler}
           ingredientRemoved={this.removeIngredientHandler}
           purchasable={this.state.purchasable}
           price={this.state.totalPrice}
+          ordered={this.purchaseHandler}
           disabled={disableInfo} />
       </>
     )
