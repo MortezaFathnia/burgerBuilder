@@ -3,10 +3,11 @@ import Backdrop from '../Backdrop/Backdrop';
 
 import classes from './Modal.module.css';
 
-const Modal = (props) => {
+const Modal = React.memo((props) => {
+  
   return (
     <>
-      <Backdrop show={props.show} clicked={props.modalClosed}/>
+      <Backdrop show={props.show} clicked={props.modalClosed} />
       <div
         style={{
           transform: props.show ? 'translateY(0)' : 'translateY(-100vh)',
@@ -17,6 +18,8 @@ const Modal = (props) => {
       </div>
     </>
   )
-}
+}, (prevProps, nextProps) => {
+  return prevProps.show === nextProps.show
+})
 
 export default Modal
