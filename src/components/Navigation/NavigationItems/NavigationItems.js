@@ -5,7 +5,7 @@ import classes from './NavigationItems.module.css'
 
 const NavigationItems = () => (
     <ul className={classes.NavigationItems}>
-      <NavigationItem link='/' exact active>Burger Builder</NavigationItem>
+      <NavigationItem link='/'>Burger Builder</NavigationItem>
       <NavigationItem link='/orders'>Orders</NavigationItem>
     </ul>
 )
