@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import Button from '../../UI/Button/Button'
 
 class OrderSummery extends Component {
-    componentDidUpdate(){
-        console.log('[orderSummery] ')
-    }
     render() {
         const ingredientsSummery = Object.keys(this.props.ingredients)
             .map(igKey => {
@@ -20,7 +17,7 @@ class OrderSummery extends Component {
                 <ul>
                     {ingredientsSummery}
                 </ul>
-                <p><strong>Total Price: {this.props.price}$</strong></p>
+                <p><strong>Total Price: {this.props.price.toFixed(2)}$</strong></p>
                 <p>Continue to Checkout?</p>
                 <Button btnType='Danger' clicked={this.props.purchasedCanceled}>CANCEL</Button>
                 <Button btnType='Success' clicked={this.props.purchasedContinued}>CONTINUE</Button>

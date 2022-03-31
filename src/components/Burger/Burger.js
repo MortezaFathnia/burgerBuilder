@@ -1,6 +1,5 @@
 import React from 'react';
-
-
+import withRouter from '../../hoc/WithRouter/WithRouter';
 import classes from './Burger.module.css'
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
@@ -11,11 +10,11 @@ const Burger = (props) => {
         return <BurgerIngredient key={igkey + i} type={igkey} />
       })
     })
-    .reduce((arr,el)=>{
+    .reduce((arr, el) => {
       return arr.concat(el)
-    },[]);
-  if(transformedIngredients.length===0){
-    transformedIngredients=<p>Please start adding ingredients</p>
+    }, []);
+  if (transformedIngredients.length === 0) {
+    transformedIngredients = <p>Please start adding ingredients</p>
   }
   return (
     <div className={classes.burger}>
@@ -26,4 +25,4 @@ const Burger = (props) => {
   )
 }
 
-export default Burger
+export default withRouter(Burger)

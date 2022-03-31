@@ -1,13 +1,21 @@
-import './App.css';
+import { Route, Routes } from 'react-router-dom';
 
 import Layout from './containers/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
+import Checkout from './containers/Checkout/Checkout';
+import Orders from './containers/Orders/Orders'
+import ContactData from './containers/Checkout/ContactData/ContactData';
 
 function App() {
   return (
     <div className="App">
       <Layout>
-        <BurgerBuilder />
+        <Routes>
+           <Route path="/checkout/contact-data" element={<ContactData />} />
+          <Route path='orders' element={<Orders/>}/>
+          <Route path='/checkout' element={<Checkout/>} />
+          <Route path='/' exact element={<BurgerBuilder/>} />
+        </Routes>
       </Layout>
     </div>
   );
