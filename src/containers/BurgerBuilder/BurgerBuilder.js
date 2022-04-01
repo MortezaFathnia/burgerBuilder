@@ -29,7 +29,6 @@ export class BurgerBuilder extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
     axios.get('https://react-my-burger-dfa1c-default-rtdb.firebaseio.com/ingredients.json')
       .then(res => {
         this.setState({ ingredients: res.data })
@@ -91,7 +90,6 @@ export class BurgerBuilder extends Component {
     for(let i in this.state.ingredients){
       queryParams.push(encodeURIComponent(i)+'='+encodeURIComponent(this.state.ingredients[i]))
     }
-    console.log(this.state.t)
     queryParams.push('price='+this.state.totalPrice.toFixed(2))
     const queryStrings=queryParams.join('&');
     this.props.navigate({pathname:'/checkout',search:queryStrings});

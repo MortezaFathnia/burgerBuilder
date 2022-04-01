@@ -30,7 +30,6 @@ export class Checkout extends Component {
       }
       return {ingredients:ingredients , price: price }
     }, {})
-    console.log(newState)
     this.setState(newState)
   }
 
@@ -43,7 +42,6 @@ export class Checkout extends Component {
   }
 
   render() {
-    console.log(this.props.location.pathname)
     return (
       <div>
         <CheckoutSummary
