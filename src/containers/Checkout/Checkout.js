@@ -1,46 +1,47 @@
 import React, { Component } from 'react'
-import { Route, Routes } from 'react-router-dom';
-import {connect} from 'react-redux'
+import { Navigate, Outlet } from 'react-router-dom';
+import { connect } from 'react-redux'
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary'
 import withRouter from '../../hoc/WithRouter/WithRouter'
-import ContactData from './ContactData/ContactData';
+import * as actions from '../../store/actions'
 
 export class Checkout extends Component {
-
 
   checkoutCanceledHandler = () => {
     this.props.navigate(-1);
   }
 
   checkoutContinuedHandler = () => {
-    this.props.navigate('/checkout/contact-data', { replace: true });
+    this.props.navigate('contact-data', { replace: true });
   }
 
   render() {
-    return (
-      <div>
-        <CheckoutSummary
-          checkoutCanceled={this.checkoutCanceledHandler}
-          checkoutContinued={this.checkoutContinuedHandler}
-          ingredients={this.props.ingredients}
-        />
-        <Routes>
-          <Route
-            path="*"
-            element={<ContactData/>} />
-        </Routes>
-      </div>
-    )
+    let summary = <Navigate to="/" replace />;
+    if (this.props.ingredients) {
+      const purchasedRedirect = this.props.purchased ? <Navigate to="/" replace /> : null;
+      summary = (
+        <div>
+          {purchasedRedirect}
+          <CheckoutSummary
+            checkoutCanceled={this.checkoutCanceledHandler}
+            checkoutContinued={this.checkoutContinuedHandler}
+            ingredients={this.props.ingredients}
+          />
+          <Outlet />
+        </div>
+      )
+    }
+    return summary;
   }
 }
 
-const mapStateToProps=state=>{
-  return{
-    ingredients:state.ingredients,
-    price:state.totalPrice
+const mapStateToProps = state => {
+  return {
+    ingredients: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    purchased: state.order.purchased
   }
 }
-
 
 export default connect(mapStateToProps)(withRouter(Checkout))

@@ -11,10 +11,12 @@ function App() {
     <div className="App">
       <Layout>
         <Routes>
-           <Route path="/checkout/contact-data" element={<ContactData />} />
-          <Route path='orders' element={<Orders/>}/>
-          <Route path='/checkout' element={<Checkout/>} />
-          <Route path='/' exact element={<BurgerBuilder/>} />
+
+          <Route path='orders' element={<Orders />} />
+          <Route path='/checkout' element={<Checkout />}>
+            <Route path="contact-data" element={<ContactData />} />
+          </Route>
+          <Route path='/' exact element={<BurgerBuilder />} />
         </Routes>
       </Layout>
     </div>
